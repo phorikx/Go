@@ -1,0 +1,76 @@
+plugins {
+    // Tell Gradle that we are builing java as a library (non-executable piece of code intended for use by other applications).
+    id 'java'
+    id 'java-library'
+    id 'jacoco'
+    id 'net.saliman.cobertura' version '4.0.0'
+    //id 'com.github.ksoichiro.console.reporter' version '0.6.2'
+}
+
+tasks.withType(AbstractArchiveTask) {
+    preserveFileTimestamps = false
+    reproducibleFileOrder = true
+}
+
+jacoco {
+    toolVersion = "0.8.6"
+    //reportsDirectory = layout.buildDirectory.dir('/build/jacoco')
+}
+
+
+repositories {
+    // Specify the repository mirror that we want to download our dependencies from. JCentral is configured by default when creating a new Gradle project.
+    jcenter()
+}
+
+dependencies {
+    // Download JUnit so that we can use it in our tests.
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+    testRuntimeOnly "org.junit.platform:junit-platform-commons:1.7.0"
+        // Use the Jersey framework to make writing and testing servlets easier.
+    implementation 'org.glassfish.jersey.containers:jersey-container-servlet-core:+'
+    implementation 'org.glassfish.jersey.containers:jersey-container-jetty-http:+'
+    implementation 'org.glassfish.jersey.core:jersey-server:+'
+    implementation 'org.glassfish.jersey.inject:jersey-hk2:+'
+    implementation 'org.glassfish.jersey.media:jersey-media-json-jackson:+'
+    // Use Jakarta (Java EE) for the servlet primitives.
+    implementation 'jakarta.servlet:jakarta.servlet-api:+'
+    // Use the Jetty server.
+    implementation 'org.eclipse.jetty:jetty-server:+'
+    implementation 'org.eclipse.jetty:jetty-servlet:+'
+    implementation 'org.eclipse.jetty:jetty-webapp:+'
+    // We want to have some logging output if things go wrong, so use the simple console logger from SLF4J.
+    // In our simple use case, the logger gets automatically configured by simply existing.
+    implementation 'org.slf4j:slf4j-simple:+'
+    
+    // Reference the domain subproject.
+    //implementation project(':domain')
+    // Use JUnit Jupiter API for testing.
+    // Also use the Mockito mocking framework to mock simple server functionality.
+    testImplementation "org.mockito:mockito-core:2.+"
+
+    // Use JUnit Jupiter Engine for testing.
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
+
+}
+
+test {
+    // For running our tests, use the test runner provided by JUnit.
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    reports {
+        xml.enabled true
+        html.enabled true
+        xml.destination = file("build" + File.separator.toString() + "jacoco" + File.separator.toString() + "jacoco.xml")
+        csv.enabled false
+        html.destination = file("build" + File.separator.toString() + "jacoco" + File.separator.toString() + "html")
+    }
+}
+
+
