@@ -26,13 +26,26 @@ public class BoardTest {
     }
 
     @Test
+    public void intersectionIsOnOwnBoard() {
+        int boardSize = 11;
+        Board testBoard = new Board(boardSize);
+        Intersection testIntersection = testBoard.getIntersection(0,0);
+
+        try{
+            testBoard.getCoordinate(testIntersection);
+        } catch (IntersectionNotOnBoardException e) {
+            assertEquals(1,0);
+        }
+    }
+
+    @Test
     public void afterPlayingIntersectionOnBoardItIsWhite() {
         int boardSize = 11;
         Board testBoard = new Board(boardSize);
         
         testBoard.playMove(new int[]{0,0}, Occupation.WHITE);
 
-        assertEquals(testBoard.getIntersection(0,0).getComponent(),Occupation.WHITE);
+        assertEquals(testBoard.getIntersection(0,0).getOccupation(),Occupation.WHITE);
     }
 
     @Test
@@ -46,17 +59,6 @@ public class BoardTest {
         assertEquals(testBoard.getIntersection(7,8).getComponent(), testBoard.getIntersection(7,8).getComponent());
     }
 
-    @Test
-    public void intersectionIsOnOwnBoard() {
-        int boardSize = 11;
-        Board testBoard = new Board(boardSize);
-        Intersection testIntersection = testBoard.getIntersection(0,0);
 
-        try{
-            testBoard.getCoordinate(testIntersection);
-        } catch (IntersectionNotOnBoardException e) {
-            assertEquals(1,0);
-        }
-    }
     
 }

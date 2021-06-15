@@ -1,7 +1,9 @@
 package go.api.models;
 
+import go.domain.*;
+
 public class Go {
-    public Mancala(mancala.domain.GoImpl Go, String namePlayer1, String namePlayer2) {
+    public Go(go.domain.GoImpl Go, String namePlayer1, String namePlayer2) {
     players = new APIPlayer[2];
 
     }

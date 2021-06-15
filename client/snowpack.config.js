@@ -22,7 +22,7 @@ module.exports = {
     /* ... */
   },
   proxy: {
-    '/mancala': 'http://localhost:7070/mancala', // <-- change 8080 to a different port if necessary
+    '/go': 'http://localhost:7070/go', // <-- change 8080 to a different port if necessary
   },
   alias: {
     /* ... */

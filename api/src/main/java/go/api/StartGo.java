@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.*;
 import go.domain.*;
 import go.api.models.*;
 
+@Path("/start")
 public class StartGo {
     @POST
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -21,18 +22,18 @@ public class StartGo {
     String namePlayer1 = players.getNameplayer1();
     String namePlayer2 = players.getNameplayer2();
 
-    var gameGo = new GoImpl();
+    var gameGo = new GoImpl(1);
 
-    var mancala = new Mancala(gameGo, namePlayer1, namePlayer2);
+    var go= new Go(gameGo, namePlayer1, namePlayer2);
     
     HttpSession session = request.getSession(true);
-    session.setAttribute("mancala", mancala);
+    session.setAttribute("go", go);
     session.setAttribute("player1", namePlayer1);
     session.setAttribute("player2", namePlayer2);
-    session.setAttribute("gameMancala", gameMancala);
+    session.setAttribute("gameGo", gameGo);
     //session.setAttribute("playerObject", firstPlayer);
 
-    return Response.status(200).entity(mancala).build();
+    return Response.status(200).entity(go).build();
 }
     
 }

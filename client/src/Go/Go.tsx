@@ -3,7 +3,7 @@ import { StartGame } from "./StartGame";
 import { Play } from "./Play";
 import { EndOfGame } from "./EndOfGame";
 import type { GameState } from "../gameState";
-import "./Mancala.css";
+import "./Go.css";
 
 /**
  * The base component for the Mancala game. If there's no active game, the `StartGame` component allows
