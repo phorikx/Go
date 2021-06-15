@@ -10,10 +10,21 @@ public class IntersectionTest {
 
     @Test
     public void intersectionStartsEmpty() {
-        Intersection intersection = new Intersection();
+        Intersection intersection = new Intersection(null);
         assertEquals(intersection.getOccupation(), Occupation.EMPTY);
     }
 
     @Test
-    public void 
+    public void intersectionHasComponent() {
+        Intersection intersection = new Intersection(null);
+        assertNotNull(intersection.getComponent());
+    }
+
+    @Test
+    public void intersectionChangesColourWhenPlayed() {
+        Intersection intersection = new Intersection(null);
+        intersection.playMove(Occupation.WHITE);
+        assertEquals(intersection.getOccupation(), Occupation.WHITE);
+    }
+
 }
