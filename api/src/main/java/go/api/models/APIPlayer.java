@@ -6,7 +6,6 @@ public class APIPlayer {
 		this.name = name;
 		type = isFirstPlayer ? "player1" : "player2";
         hasTurn = player.getTurn();
-		var firstHole = isFirstPlayer ? 0 : 7;
     }
     
     String name;

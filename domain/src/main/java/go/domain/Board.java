@@ -21,6 +21,10 @@ public class Board {
         return intersections[i][j];
     }
 
+    public int getBoardSize() {
+        return boardSize;
+    }
+
     public void playMove(int[] coordinates, Occupation colourPlayed) {
         Intersection playedIntersection = this.getIntersection(coordinates[0],coordinates[1]);
         playedIntersection.playMove(colourPlayed);

@@ -3,7 +3,7 @@ package go.domain;
 import java.util.ArrayList;
 
 public class Intersection {
-    enum Occupation{
+    public enum Occupation{
         EMPTY,
         BLACK,
         WHITE

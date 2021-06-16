@@ -10,7 +10,11 @@ public class Player {
 
     public Player(Player opponent) {
         if (opponent == null) {
-            opponent = new Player(this);
+            this.opponent = new Player(this);
+            this.hasTurn = true;
+        } else {
+            this.opponent = opponent;
+            this.hasTurn = false;
         }
     }
 

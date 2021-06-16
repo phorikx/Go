@@ -1,10 +1,10 @@
 package go.domain;
 
 public class GoImpl {
-    Board gameBoard;
-    Player[] players;
-    GameStatus gameStatus;
-    GameHistory gameHistory;
+    private Board gameBoard;
+    private Player[] players;
+    private GameStatus gameStatus;
+    private GameHistory gameHistory;
 
 
     public GoImpl(int boardSize){
@@ -14,8 +14,20 @@ public class GoImpl {
         players[1] = players[0].getOpponent();
     }
 
-    public void playIntersection(int[] coordinates, go.domain.Intersection.Occupation colour) {
+    public void playIntersection(int[] coordinates, go.domain.Intersection.Occupation colour) throws GoException{
         this.gameBoard.playMove(coordinates, colour);
     }
-    
+
+    public Player getFirstPlayer() {
+        return this.players[0];
+    }
+
+    public Player getSecondPlayer() {
+        return this.players[1];
+    }
+
+    public Board getBoard() {
+        return gameBoard;
+    }
+
 }
