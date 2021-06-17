@@ -6,6 +6,7 @@ public class APIPlayer {
 		this.name = name;
 		type = isFirstPlayer ? "player1" : "player2";
         hasTurn = player.getTurn();
+		score = player.getCapturedStones();
     }
     
     String name;
@@ -16,5 +17,8 @@ public class APIPlayer {
 
 	boolean hasTurn;
 	public boolean getHasTurn() { return hasTurn; }
+
+	int score;
+	public int getScore() { return score;}
 
 }

@@ -117,7 +117,20 @@ export function Play({ gameState, setGameState }: PlayProps) {
                     
                 </tbody>
             </table>
-             {nameHasTurn} has the turn. Enter a move!     
+             {nameHasTurn} has the turn. Enter a move!
+
+             <table>
+                 <tbody>
+                     <tr>
+                         <td> {gameState.players[0].name} </td>
+                         <td> {gameState.players[1].name} </td>
+                     </tr>
+                     <tr>
+                         <td> {gameState.players[0].score} </td>
+                         <td> {gameState.players[1].score} </td>
+                     </tr>
+                 </tbody>
+            </table>     
              </div>       
     )
 }
