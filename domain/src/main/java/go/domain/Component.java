@@ -7,13 +7,11 @@ import go.domain.Intersection.Occupation;
 public class Component {
     private ArrayList<Intersection> intersections;
     Component(Intersection buildingIntersection) {
-        System.out.println("Make new Component.");
         this.intersections = new ArrayList<Intersection>();
         intersections.add(buildingIntersection);
     }
 
     public void mergeWithComponent(Component neighbouringComponent) {
-        System.out.println("Merging components.");
         for (Intersection elementOfThisComponent : this.intersections) {
             neighbouringComponent.addIntersection(elementOfThisComponent);
             elementOfThisComponent.setComponent(neighbouringComponent);            
@@ -31,7 +29,6 @@ public class Component {
     }
 
     public void removeComponent() {
-        System.out.println("Remove the component.");
         int componentSize = this.intersections.size();
         System.out.println(componentSize);
         Occupation componentColour = this.intersections.get(0).getOccupation();

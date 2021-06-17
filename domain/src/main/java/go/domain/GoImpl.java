@@ -10,12 +10,18 @@ public class GoImpl {
     public GoImpl(int boardSize){
         this.gameBoard = new Board(boardSize);
         players = new Player[2];
+
+        
         players[0] = new Player(null);
         players[1] = players[0].getOpponent();
+
+        this.gameBoard.assignPlayers(players[0]);
     }
 
     public void playIntersection(int[] coordinates, go.domain.Intersection.Occupation colour) throws GoException{
+        System.out.println("Received move on coordinates:");
         this.gameBoard.playMove(coordinates, colour);
+        players[0].switchTurn();
     }
 
     public Player getFirstPlayer() {

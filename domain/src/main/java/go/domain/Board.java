@@ -28,17 +28,14 @@ public class Board {
     }
 
     public void playMove(int[] coordinates, Occupation colourPlayed) {
-        System.out.println("Play a move.");
         Intersection playedIntersection = this.getIntersection(coordinates[0],coordinates[1]);
         playedIntersection.playMove(colourPlayed);
     }
 
     public int[] getCoordinate(Intersection intersection) throws IntersectionNotOnBoardException {
-        System.out.println("getting Coordinate of Intersection.");
         for (int i = 0; i < this.boardSize; i++) {
             for (int j = 0; j < this.boardSize; j++) {
                 if (this.intersections[i][j] == intersection) {
-                    System.out.print("Intersection has been found.");
                     return new int[]{i,j};                    
                 }
             }
@@ -49,7 +46,6 @@ public class Board {
     }
 
     public ArrayList<Intersection> getNeighbours(Intersection intersection) throws IntersectionNotOnBoardException{
-        System.out.println("Getting neighbours for intersection.");
         int[] coordinates = this.getCoordinate(intersection);
         ArrayList<Intersection> neighbours = new ArrayList<Intersection>();
         if(coordinates[0] > 0) {

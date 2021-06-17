@@ -28,22 +28,22 @@ public class Intersection {
     }
 
     public void playMove(Occupation playedColour) {
-        System.out.println("Played a move on an Intersection.");
-        if (playedColour != Occupation.EMPTY) {
+        if (playedColour != Occupation.EMPTY && this.occupation == Occupation.EMPTY) {
             this.occupation = playedColour;
         }
         try {
             ArrayList<Intersection> neighbours = this.board.getNeighbours(this);
             System.out.println(neighbours.size());
-            for (Intersection neighbour : neighbours) {
-                System.out.println("merging components with neighbours.");
+            for (Intersection neighbour : neighbours) {                
                 if (neighbour.getOccupation() == this.occupation) {
+                    System.out.println("merging components with neighbours.");
                     neighbour.mergeComponent(this.component);
                 }
             }
-            ArrayList<Intersection> intersectionsToCheck = neighbours;
-            intersectionsToCheck.add(this);
-            checkIntersectionComponentFreedoms(intersectionsToCheck);
+            ArrayList<Intersection> ownIntersection = new ArrayList<Intersection>();
+            ownIntersection.add(this);
+            checkIntersectionComponentFreedoms(neighbours);
+            checkIntersectionComponentFreedoms(ownIntersection);
         } catch (Exception e) {
             System.out.println("Error: intersectie ligt niet op zijn eigen bord.");
         }
@@ -52,6 +52,7 @@ public class Intersection {
     public void checkIntersectionComponentFreedoms (ArrayList<Intersection> intersectionsToCheck) {
         for(Intersection intersection : intersectionsToCheck) {
             if(!intersection.getComponent().componentHasFreedoms()) {
+                System.out.println("Connection has to be removed.");
                 intersection.getComponent().removeComponent();
             }
         }
@@ -59,12 +60,10 @@ public class Intersection {
     }
 
     public void setComponent(Component component) {
-        System.out.println("Set the component.");
         this.component = component;
     }
 
     public void mergeComponent(Component component) {
-        System.out.println("Merged component with another component.");
         this.component.mergeWithComponent(component);
     }
 

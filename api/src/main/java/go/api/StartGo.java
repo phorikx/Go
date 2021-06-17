@@ -22,7 +22,7 @@ public class StartGo {
     String namePlayer1 = players.getNameplayer1();
     String namePlayer2 = players.getNameplayer2();
 
-    var gameGo = new GoImpl(1);
+    var gameGo = new GoImpl(5);
 
     var go= new Go(gameGo, namePlayer1, namePlayer2);
     

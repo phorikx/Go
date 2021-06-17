@@ -27,4 +27,14 @@ public class IntersectionTest {
         assertEquals(intersection.getOccupation(), Occupation.WHITE);
     }
 
+    @Test
+    public void cannotPlayNonEmptyIntersection() {
+        Intersection intersection = new Intersection(null);
+        intersection.playMove(Occupation.WHITE);
+        intersection.playMove(Occupation.BLACK);
+        assertEquals(intersection.getOccupation(), Occupation.WHITE);
+    }
+
+
+
 }

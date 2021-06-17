@@ -95,6 +95,7 @@ public class BoardTest {
 
         testBoard.playMove(new int[]{0,0}, Occupation.WHITE);
         testBoard.playMove(new int[]{1,0}, Occupation.BLACK);
+        testBoard.playMove(new int[]{2,2}, Occupation.WHITE);
         testBoard.playMove(new int[]{0,1}, Occupation.BLACK);
 
         assertEquals(testBoard.getIntersection(0, 0).getOccupation(), Occupation.EMPTY);
@@ -231,4 +232,60 @@ public class BoardTest {
 
         assertEquals(testBoard.getIntersection(1,0).getOccupation(), Occupation.EMPTY);
     }
+    @Test 
+    public void canPlayMoveWithNoFreedomsIfItRemovesOtherStones() {
+        int boardSize = 11;
+        Board testBoard = new Board(boardSize);
+
+        
+        Player firstPlayer = new Player(null);
+        testBoard.assignPlayers(firstPlayer);
+
+        testBoard.playMove(new int[]{0,0}, Occupation.WHITE);
+        testBoard.playMove(new int[]{0,1}, Occupation.BLACK);
+        testBoard.playMove(new int[]{0,2}, Occupation.WHITE);
+        testBoard.playMove(new int[]{1,1}, Occupation.WHITE);
+        testBoard.playMove(new int[]{1,0}, Occupation.BLACK);
+
+        assertEquals(testBoard.getIntersection(1,0).getOccupation(), Occupation.BLACK);
+
+    }
+
+    @Test 
+    public void moveWithNoFreedomsRemovesStoneWhichItTakesLastFreedomFrom() {
+        int boardSize = 11;
+        Board testBoard = new Board(boardSize);
+
+        
+        Player firstPlayer = new Player(null);
+        testBoard.assignPlayers(firstPlayer);
+
+        testBoard.playMove(new int[]{0,0}, Occupation.WHITE);
+        testBoard.playMove(new int[]{1,0}, Occupation.BLACK);
+        testBoard.playMove(new int[]{0,2}, Occupation.WHITE);
+        testBoard.playMove(new int[]{1,1}, Occupation.WHITE);
+        testBoard.playMove(new int[]{0,1}, Occupation.BLACK);
+
+        assertEquals(testBoard.getIntersection(0,0).getOccupation(), Occupation.EMPTY);
+    }
+
+
+/*
+    @Test 
+    public void repeatMoveIsNotAllowed() {
+        int boardSize = 11;
+        Board testBoard = new Board(boardSize);
+
+        
+        Player firstPlayer = new Player(null);
+        testBoard.assignPlayers(firstPlayer);
+
+        testBoard.playMove(new int[]{0,0}, Occupation.WHITE);
+        testBoard.playMove(new int[]{0,1}, Occupation.BLACK);
+        testBoard.playMove(new int[]{0,2}, Occupation.WHITE);
+        testBoard.playMove(new int[]{1,1}, Occupation.WHITE);
+        testBoard.playMove(new int[]{1,0}, Occupation.BLACK);
+
+        assertEquals(testBoard.getIntersection(1,0).getOccupation(), Occupation.EMPTY);
+    }*/
 }

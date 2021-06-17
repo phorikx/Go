@@ -31,4 +31,9 @@ public class Player {
     public int getCapturedStones() {
         return this.capturedStones;
     }
+
+    public void switchTurn() {
+        this.hasTurn = !this.hasTurn;
+        this.getOpponent().hasTurn = !this.hasTurn;
+    }
 }
