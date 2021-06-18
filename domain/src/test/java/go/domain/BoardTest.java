@@ -270,22 +270,20 @@ public class BoardTest {
     }
 
 
-/*
+
     @Test 
     public void repeatMoveIsNotAllowed() {
-        int boardSize = 11;
-        Board testBoard = new Board(boardSize);
+        GoImpl go = new GoImpl(11);
 
-        
-        Player firstPlayer = new Player(null);
-        testBoard.assignPlayers(firstPlayer);
+        go.playIntersection(new int[]{0,0}, Occupation.BLACK);
+        go.playIntersection(new int[]{1,0}, Occupation.WHITE);
+        go.playIntersection(new int[]{1,1}, Occupation.BLACK);
+        go.playIntersection(new int[]{3,0}, Occupation.WHITE);
+        go.playIntersection(new int[]{4,0}, Occupation.BLACK);
+        go.playIntersection(new int[]{2,1}, Occupation.WHITE);
+        go.playIntersection(new int[]{2,0}, Occupation.BLACK);
+        go.playIntersection(new int[]{1,0}, Occupation.WHITE);
 
-        testBoard.playMove(new int[]{0,0}, Occupation.WHITE);
-        testBoard.playMove(new int[]{0,1}, Occupation.BLACK);
-        testBoard.playMove(new int[]{0,2}, Occupation.WHITE);
-        testBoard.playMove(new int[]{1,1}, Occupation.WHITE);
-        testBoard.playMove(new int[]{1,0}, Occupation.BLACK);
-
-        assertEquals(testBoard.getIntersection(1,0).getOccupation(), Occupation.EMPTY);
-    }*/
+        assertEquals(go.getBoard().getIntersection(1,0).getOccupation(), Occupation.EMPTY);
+    }
 }

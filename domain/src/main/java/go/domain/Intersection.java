@@ -23,6 +23,10 @@ public class Intersection {
         return this.occupation;
     }
 
+    void setOccupation(Occupation colour) {
+        this.occupation = colour;
+    }
+
     public Component getComponent() {
         return this.component;
     }
@@ -34,14 +38,20 @@ public class Intersection {
         try {
             ArrayList<Intersection> neighbours = this.board.getNeighbours(this);
             System.out.println(neighbours.size());
+            ArrayList<Intersection> neighboursWithDifferentColour = new ArrayList<Intersection>();
             for (Intersection neighbour : neighbours) {                
                 if (neighbour.getOccupation() == this.occupation) {
                     System.out.println("merging components with neighbours.");
                     neighbour.mergeComponent(this.component);
+                } else  {
+                    neighboursWithDifferentColour.add(neighbour);
                 }
             }
             ArrayList<Intersection> ownIntersection = new ArrayList<Intersection>();
             ownIntersection.add(this);
+            System.out.println("number of neighbours with different coloured Components:" + String.valueOf(neighboursWithDifferentColour.size()));
+            System.out.println("number of neighbours with same-coloured Components:" + String.valueOf(neighbours.size()));
+            checkIntersectionComponentFreedoms(neighboursWithDifferentColour);
             checkIntersectionComponentFreedoms(neighbours);
             checkIntersectionComponentFreedoms(ownIntersection);
         } catch (Exception e) {
@@ -51,7 +61,7 @@ public class Intersection {
 
     public void checkIntersectionComponentFreedoms (ArrayList<Intersection> intersectionsToCheck) {
         for(Intersection intersection : intersectionsToCheck) {
-            if(!intersection.getComponent().componentHasFreedoms()) {
+            if(!intersection.getComponent().componentHasFreedoms() && intersection.getOccupation() != Occupation.EMPTY) {
                 System.out.println("Connection has to be removed.");
                 intersection.getComponent().removeComponent();
             }

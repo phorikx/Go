@@ -36,14 +36,9 @@ public class PlayMove {
     } else{
         colour = Occupation.EMPTY;
     }
-    try{
-        gameGo.playIntersection(playedIntersection, colour);
-        Go go = new Go(gameGo, ((String) session.getAttribute("player1")), ((String) session.getAttribute("player2")));
-        return Response.status(200).entity(go).build();
-    } catch(GoException e) {
-        Go go = new Go(gameGo, ((String) session.getAttribute("player1")), ((String) session.getAttribute("player2")));
-        return Response.status(406).entity(go).build();
-    } 
+    gameGo.playIntersection(playedIntersection, colour);
+    Go go = new Go(gameGo, ((String) session.getAttribute("player1")), ((String) session.getAttribute("player2")));
+    return Response.status(200).entity(go).build(); 
 
 }
 }

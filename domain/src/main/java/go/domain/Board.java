@@ -18,6 +18,28 @@ public class Board {
             }
         }
     }
+
+    Board(Board previousBoard) {
+        this.boardSize = previousBoard.boardSize;
+        this.firstPlayer = previousBoard.firstPlayer;
+        this.secondPlayer = previousBoard.secondPlayer;
+        this.intersections = new Intersection[boardSize][boardSize];
+        ArrayList<Component> originalComponents = new ArrayList<Component>();
+        ArrayList<Component> correspondingNewComponents = new ArrayList<Component>();
+        for(int i = 0; i < boardSize; i++){
+            for(int j = 0; j < boardSize; j++) {
+                this.intersections[i][j] = new Intersection(this);
+                int indexOfComponent = originalComponents.indexOf(previousBoard.getIntersection(i,j).getComponent());
+                if (indexOfComponent >= 0){
+                    intersections[i][j].setComponent(correspondingNewComponents.get(indexOfComponent));
+                } else{
+                    originalComponents.add(previousBoard.getIntersection(i,j).getComponent());
+                    correspondingNewComponents.add(this.intersections[i][j].getComponent());
+                }
+                intersections[i][j].setOccupation(previousBoard.getIntersection(i,j).getOccupation());
+            }
+        }
+    }
      
     public Intersection getIntersection(int i, int j) {
         return intersections[i][j];
@@ -75,5 +97,21 @@ public class Board {
     public void assignPlayers(Player firstPlayer) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = firstPlayer.getOpponent();
+    }
+
+    public String getStringEncoding() {
+        String encodedBoard = "";
+        for (int i = 0; i < this.boardSize; i++) {
+            for (int j = 0; j < this.boardSize; j++) {
+                if (intersections[i][j].getOccupation() == Occupation.WHITE) {
+                    encodedBoard += "W";
+                } else if (intersections[i][j].getOccupation() == Occupation.BLACK) {
+                    encodedBoard += "B";
+                } else {
+                    encodedBoard += "E";
+                }
+            }
+        }
+        return encodedBoard;
     }
 }

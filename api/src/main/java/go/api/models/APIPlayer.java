@@ -4,9 +4,9 @@ public class APIPlayer {
     public APIPlayer(go.domain.Player player, 
             String name, boolean isFirstPlayer) {
 		this.name = name;
-		type = isFirstPlayer ? "player1" : "player2";
-        hasTurn = player.getTurn();
-		score = player.getCapturedStones();
+		this.type = isFirstPlayer ? "player1" : "player2";
+        this.hasTurn = player.getTurn();
+		this.score = player.getCapturedStones();
     }
     
     String name;
