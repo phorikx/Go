@@ -37,7 +37,7 @@ public class Intersection {
         }
         try {
             ArrayList<Intersection> neighbours = this.board.getNeighbours(this);
-            System.out.println(neighbours.size());
+            System.out.println("Size of the neighbours: " + String.valueOf(neighbours.size()));
             ArrayList<Intersection> neighboursWithDifferentColour = new ArrayList<Intersection>();
             for (Intersection neighbour : neighbours) {                
                 if (neighbour.getOccupation() == this.occupation) {
@@ -49,9 +49,8 @@ public class Intersection {
             }
             ArrayList<Intersection> ownIntersection = new ArrayList<Intersection>();
             ownIntersection.add(this);
-            System.out.println("number of neighbours with different coloured Components:" + String.valueOf(neighboursWithDifferentColour.size()));
-            System.out.println("number of neighbours with same-coloured Components:" + String.valueOf(neighbours.size()));
-            checkIntersectionComponentFreedoms(neighboursWithDifferentColour);
+            //checkIntersectionComponentFreedoms(neighboursWithDifferentColour);
+            System.out.println("We gaan de vrijheden checken.");
             checkIntersectionComponentFreedoms(neighbours);
             checkIntersectionComponentFreedoms(ownIntersection);
         } catch (Exception e) {
@@ -61,9 +60,12 @@ public class Intersection {
 
     public void checkIntersectionComponentFreedoms (ArrayList<Intersection> intersectionsToCheck) {
         for(Intersection intersection : intersectionsToCheck) {
-            if(!intersection.getComponent().componentHasFreedoms() && intersection.getOccupation() != Occupation.EMPTY) {
+            System.out.println("We kijken of de componenten nog vrijheden heeft.");
+            if ((!intersection.getComponent().componentHasFreedoms()) && (intersection.getOccupation() != Occupation.EMPTY)) {
                 System.out.println("Connection has to be removed.");
                 intersection.getComponent().removeComponent();
+            } else{
+                System.out.println("Hij had nog vrijheden.");
             }
         }
 
@@ -95,6 +97,8 @@ public class Intersection {
 
     public void removeStone() {
         this.occupation = Occupation.EMPTY;
+        Component emptyComponent = new Component(this);
+        this.setComponent(emptyComponent);
     }
 
     public Board getBoard() {

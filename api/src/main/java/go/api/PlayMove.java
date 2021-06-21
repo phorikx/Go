@@ -36,7 +36,8 @@ public class PlayMove {
     } else{
         colour = Occupation.EMPTY;
     }
-    gameGo.playIntersection(playedIntersection, colour);
+    System.out.println("Has the player passed?" + String.valueOf(playerMove.getDidPass()));
+    gameGo.playIntersection(playedIntersection, colour,playerMove.getDidPass());
     Go go = new Go(gameGo, ((String) session.getAttribute("player1")), ((String) session.getAttribute("player2")));
     return Response.status(200).entity(go).build(); 
 

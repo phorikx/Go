@@ -49,6 +49,13 @@ export function Play({ gameState, setGameState }: PlayProps) {
             var firstCoordinate = Number(firstCoordinateString)
             var secondCoordinateString = (playedMove.match(",([^\]]*)\]"))[1];
             console.log(secondCoordinateString);
+            var didPassString = (playedMove.match("[^t]*(true|false)"))[1];
+            var didPass;
+            if (didPassString == "true") {
+                didPass = true;
+            } else {
+                didPass = false;
+            }
             var secondCoordinate = Number(secondCoordinateString);
             var numbersPlayed = [firstCoordinate,secondCoordinate];
             const response = await fetch('go/api/play', {
@@ -57,7 +64,7 @@ export function Play({ gameState, setGameState }: PlayProps) {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({playerName: nameHasTurn, firstCoordinatePlayed: firstCoordinate, secondCoordinatePlayed: secondCoordinate})
+                body: JSON.stringify({playerName: nameHasTurn, firstCoordinatePlayed: firstCoordinate, secondCoordinatePlayed: secondCoordinate, didPass: didPass})
             });
 
             if (response.ok) {
@@ -80,44 +87,46 @@ export function Play({ gameState, setGameState }: PlayProps) {
             <table>
                 <tbody>
                     <tr>
-                        <td> <button onClick = {(e) => tryPlayMove("[0,0]", e)}> {createImage(gameState.board[0][0])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[1,0]", e)}>{createImage(gameState.board[1][0])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[2,0]", e)}>{createImage(gameState.board[2][0])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[3,0]", e)}>{createImage(gameState.board[3][0])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[4,0]", e)}> {createImage(gameState.board[4][0])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[0,0],false", e)}> {createImage(gameState.board[0][0])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[1,0],false", e)}>{createImage(gameState.board[1][0])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[2,0],false", e)}>{createImage(gameState.board[2][0])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[3,0],false", e)}>{createImage(gameState.board[3][0])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[4,0],false", e)}> {createImage(gameState.board[4][0])} </button></td>
                     </tr>
                     <tr>
-                        <td> <button onClick = {(e) => tryPlayMove("[0,1]", e)}>{createImage(gameState.board[0][1])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[1,1]", e)}>{createImage(gameState.board[1][1])}</button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[2,1]", e)}>{createImage(gameState.board[2][1])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[3,1]", e)}>{createImage(gameState.board[3][1])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[4,1]", e)}>{createImage(gameState.board[4][1])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[0,1],false", e)}>{createImage(gameState.board[0][1])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[1,1],false", e)}>{createImage(gameState.board[1][1])}</button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[2,1],false", e)}>{createImage(gameState.board[2][1])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[3,1],false", e)}>{createImage(gameState.board[3][1])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[4,1],false", e)}>{createImage(gameState.board[4][1])} </button></td>
                     </tr>
                     <tr>
-                        <td> <button onClick = {(e) => tryPlayMove("[0,2]", e)}>{createImage(gameState.board[0][2])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[1,2]", e)}>{createImage(gameState.board[1][2])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[2,2]", e)}>{createImage(gameState.board[2][2])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[3,2]", e)}>{createImage(gameState.board[3][2])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[4,2]", e)}>{createImage(gameState.board[4][2])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[0,2],false", e)}>{createImage(gameState.board[0][2])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[1,2],false", e)}>{createImage(gameState.board[1][2])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[2,2],false", e)}>{createImage(gameState.board[2][2])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[3,2],false", e)}>{createImage(gameState.board[3][2])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[4,2],false", e)}>{createImage(gameState.board[4][2])} </button></td>
                     </tr>
                     <tr>
-                        <td> <button onClick = {(e) => tryPlayMove("[0,3]", e)}>{createImage(gameState.board[0][3])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[1,3]", e)}>{createImage(gameState.board[1][3])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[2,3]", e)}>{createImage(gameState.board[2][3])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[3,3]", e)}>{createImage(gameState.board[3][3])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[4,3]", e)}>{createImage(gameState.board[4][3])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[0,3],false", e)}>{createImage(gameState.board[0][3])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[1,3],false", e)}>{createImage(gameState.board[1][3])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[2,3],false", e)}>{createImage(gameState.board[2][3])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[3,3],false", e)}>{createImage(gameState.board[3][3])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[4,3],false", e)}>{createImage(gameState.board[4][3])} </button></td>
                     </tr>
                     <tr>
-                        <td> <button onClick = {(e) => tryPlayMove("[0,4]", e)}>{createImage(gameState.board[0][4])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[1,4]", e)}>{createImage(gameState.board[1][4])}</button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[2,4]", e)}>{createImage(gameState.board[2][4])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[3,4]", e)}>{createImage(gameState.board[3][4])} </button></td>
-                        <td> <button onClick = {(e) => tryPlayMove("[4,4]", e)}>{createImage(gameState.board[4][4])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[0,4],false", e)}>{createImage(gameState.board[0][4])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[1,4],false", e)}>{createImage(gameState.board[1][4])}</button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[2,4],false", e)}>{createImage(gameState.board[2][4])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[3,4],false", e)}>{createImage(gameState.board[3][4])} </button></td>
+                        <td> <button onClick = {(e) => tryPlayMove("[4,4],false", e)}>{createImage(gameState.board[4][4])} </button></td>
                     </tr>
                     
                 </tbody>
             </table>
              {nameHasTurn} has the turn. Enter a move!
+
+             <button onClick = {(e) => tryPlayMove("[0,0],true", e)}> Pass </button>
 
              <table>
                  <tbody>

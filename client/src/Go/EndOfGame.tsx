@@ -13,7 +13,18 @@ export function EndOfGame({ gameState, setGameState }: EndOfGameProps) {
 
     return (
     <div>
-    {gameState.gameStatus.winner} has won.       
+    {gameState.gameStatus.winner} has won.
+
+    Final score:
+
+    <table>
+        <tr>
+            <td>
+            {gameState.players[0].name} vs
+            </td>
+            <td> {gameState.players[1].name}</td>
+        </tr>
+    </table>
      </div>
     )
 }

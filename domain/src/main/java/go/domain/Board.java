@@ -8,6 +8,11 @@ public class Board {
     int boardSize;
     Player firstPlayer;
     Player secondPlayer;
+    private boolean testBoard = false;
+
+    public boolean getIsTestBoard() {
+        return testBoard;
+    }
 
     Board(int boardSize) {
         this.boardSize = boardSize;
@@ -19,7 +24,8 @@ public class Board {
         }
     }
 
-    Board(Board previousBoard) {
+    Board(Board previousBoard, boolean testBoard) {
+        this.testBoard = true;
         this.boardSize = previousBoard.boardSize;
         this.firstPlayer = previousBoard.firstPlayer;
         this.secondPlayer = previousBoard.secondPlayer;
@@ -83,7 +89,6 @@ public class Board {
             neighbours.add(this.getIntersection(coordinates[0], coordinates[1]+1));
         }   
         return neighbours;
-
     }
 
     public Player getFirstPlayer() {
@@ -113,5 +118,51 @@ public class Board {
             }
         }
         return encodedBoard;
+    }
+
+    public void connectEmptyIntersections() {
+        for(int i = 0; i < this.boardSize; i++){
+            for (int j = 0; j < this.boardSize; j++) {
+                if (this.intersections[i][j].getOccupation() == Occupation.EMPTY) {
+                    try{
+                        ArrayList<Intersection> neighbours = this.getNeighbours(intersections[i][j]);
+                        for (Intersection neighbour : neighbours) {
+                            if (neighbour.getOccupation() == Occupation.EMPTY) {
+                                neighbour.mergeComponent(intersections[i][j].getComponent());
+                            }
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Something went wrong.");
+                    }
+                }
+            }
+        }
+    }
+
+    public int[] countPointsAfterConnection() {
+        int[] endOfGamePoints = new int[]{0,0};
+        for(int i = 0; i < this.boardSize; i++){
+            for (int j = 0; j < this.boardSize; j++) {
+                if(this.intersections[i][j].getOccupation() == Occupation.BLACK) {
+                    endOfGamePoints[0]++;
+                } else if(this.intersections[i][j].getOccupation() == Occupation.WHITE) {
+                    endOfGamePoints[1]++;
+                } else if(this.intersections[i][j].getOccupation() == Occupation.EMPTY) {
+                    if (!this.intersections[i][j].getComponent().getIsCounted()) {
+                        int[] areaScorePerPlayer = this.intersections[i][j].getComponent().Count();
+                        endOfGamePoints[0] += areaScorePerPlayer[0];
+                        endOfGamePoints[1] += areaScorePerPlayer[1];                        
+                    }
+                }
+            }
+        }
+        return endOfGamePoints;
+    }
+
+    public int[] calculateEndOfGamePoints() {
+        int[] endOfGamePoints;
+        this.connectEmptyIntersections();
+        endOfGamePoints = this.countPointsAfterConnection();
+        return endOfGamePoints;
     }
 }

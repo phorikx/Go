@@ -6,9 +6,14 @@ public class PlayerMove {
     String playerName;
     int firstCoordinatePlayed;
     int secondCoordinatePlayed;
+    boolean didPass;
 
     public String getPlayerName() {
         return playerName;
+    }
+
+    public boolean getDidPass(){
+        return didPass;
     }
 
     public Integer getFirstCoordinatePlayed() {

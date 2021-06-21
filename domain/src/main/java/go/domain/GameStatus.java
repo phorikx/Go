@@ -5,14 +5,18 @@ import go.domain.Intersection.Occupation;
 public class GameStatus {
     private Player[] players;
     private Board gameBoard;
+    private boolean endOfGame;
 
-
+    public boolean getEndOfGame() {
+        return endOfGame;
+    }
 
     public GameStatus(Player firstPlayer, Board gameBoard) {
         players = new Player[2];
         players[0] = firstPlayer;
         players[1] = firstPlayer.getOpponent();
         this.gameBoard = gameBoard;
+        endOfGame = false;
     }
 
     public boolean validMove(int[] coordinates, Occupation colour, GameHistory gameHistory) {
@@ -37,7 +41,7 @@ public class GameStatus {
 
         if (validity) {
             
-            Board testBoard = new Board(this.gameBoard);
+            Board testBoard = new Board(this.gameBoard, true);
             testBoard.playMove(coordinates, colour);
             String encodedTestBoard = testBoard.getStringEncoding();
             if (gameHistory.contains(encodedTestBoard)) {
@@ -46,6 +50,28 @@ public class GameStatus {
             }
         }
         return validity;        
+    }
+
+    public void endGame() {
+        this.endOfGame = true;
+    }
+
+    public double[] calculatePointsperPlayer() {
+        double[] pointsPerPlayer = new double[]{0,0};
+        pointsPerPlayer[0] += this.players[0].getCapturedStones();
+        pointsPerPlayer[1] += this.players[1].getCapturedStones();
+        pointsPerPlayer[0] += this.gameBoard.calculateEndOfGamePoints()[0];
+        pointsPerPlayer[1] += this.gameBoard.calculateEndOfGamePoints()[1];
+        pointsPerPlayer[1] += GoImpl.komi;
+        return pointsPerPlayer;
+    }
+
+    public Player getWinner() {
+        double[] pointsPerPlayer = this.calculatePointsperPlayer();
+        if (pointsPerPlayer[0]>pointsPerPlayer[1]) {
+            return this.players[0];
+        }
+        return players[1];
     }
 
 }
