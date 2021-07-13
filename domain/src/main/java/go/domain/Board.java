@@ -4,17 +4,18 @@ import go.domain.Intersection.Occupation;
 import java.util.ArrayList;
 
 public class Board {
-    Intersection[][] intersections;
-    int boardSize;
-    Player firstPlayer;
-    Player secondPlayer;
+    private Intersection[][] intersections;
+    private int boardSize;
+    private Player firstPlayer;
+   private Player secondPlayer;
     private boolean testBoard = false;
 
     public boolean getIsTestBoard() {
         return testBoard;
     }
 
-    Board(int boardSize) {
+    public Board(int boardSize) {
+        this.testBoard = false;
         this.boardSize = boardSize;
         this.intersections = new Intersection[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
@@ -24,8 +25,8 @@ public class Board {
         }
     }
 
-    Board(Board previousBoard, boolean testBoard) {
-        this.testBoard = true;
+    public Board(Board previousBoard, boolean testBoard) {
+        this.testBoard = testBoard;
         this.boardSize = previousBoard.boardSize;
         this.firstPlayer = previousBoard.firstPlayer;
         this.secondPlayer = previousBoard.secondPlayer;

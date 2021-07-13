@@ -13,7 +13,7 @@ import go.domain.Player;
 import go.domain.Intersection.Occupation;
 
 @Path("/play")
-public class PlayMove {
+public class PlayMove {   
     @POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
@@ -26,6 +26,10 @@ public class PlayMove {
     System.out.println(playerMove.getPlayIntersection());
 
     GoImpl gameGo = (GoImpl) session.getAttribute("gameGo");
+    /*
+    Configurer config = (DefaultConfigurer) session.getAttribute("configurer");
+    DefaultCommandGateway commandGateway = (DefaultCommandGateway) session.getAttribute("commandGateway");
+    */
     ArrayList<Integer> playedIntersectionArrayList = playerMove.getPlayIntersection();
     int[] playedIntersection = new int[] {playedIntersectionArrayList.get(0),playedIntersectionArrayList.get(1)};
     Occupation colour;
@@ -37,6 +41,7 @@ public class PlayMove {
         colour = Occupation.EMPTY;
     }
     System.out.println("Has the player passed?" + String.valueOf(playerMove.getDidPass()));
+
     gameGo.playIntersection(playedIntersection, colour,playerMove.getDidPass());
     Go go = new Go(gameGo, ((String) session.getAttribute("player1")), ((String) session.getAttribute("player2")));
     return Response.status(200).entity(go).build(); 

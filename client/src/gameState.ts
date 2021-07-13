@@ -2,9 +2,11 @@
 export interface GameState {
     players: [ Player, Player ]; // a player array contains exactly two Players
     board: string[][];
+    boardSize: number;
     gameStatus: {
         endOfGame: boolean;
         winner: string;
+        score: number[]
     };
 }
 

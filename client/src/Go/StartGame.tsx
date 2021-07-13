@@ -14,6 +14,7 @@ export function StartGame({ setGameState }: StartGameProps) {
     const [errorMessage, setErrorMessage] = useState("");
     const [playerOne, setPlayerOne] = useState("");
     const [playerTwo, setPlayerTwo] = useState("");
+    const [boardSize, setBoardSize] = useState("");
 
     async function tryStartGame(e: React.FormEvent) {
         e.preventDefault(); // Prevent default browser behavior of submitting forms
@@ -29,6 +30,11 @@ export function StartGame({ setGameState }: StartGameProps) {
             setErrorMessage("Each player should have a unique name");
             return;
         }
+
+        if (isNaN(Number(boardSize))) {
+            setErrorMessage("You should set a number as the board size.");
+            return;
+        }
         setErrorMessage("");
         
         try {
@@ -38,7 +44,7 @@ export function StartGame({ setGameState }: StartGameProps) {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ nameplayer1: playerOne, nameplayer2: playerTwo })
+                body: JSON.stringify({ nameplayer1: playerOne, nameplayer2: playerTwo, boardSize : boardSize })
             });
 
             if (response.ok) {
@@ -62,6 +68,11 @@ export function StartGame({ setGameState }: StartGameProps) {
             <input value={playerTwo}
                 placeholder="Player 2 name"
                 onChange={(e) => setPlayerTwo(e.target.value)}
+            />
+
+            <input value={boardSize}
+                placeholder="Board Size"
+                onChange={(e) => setBoardSize(e.target.value)}
             />
 
             <p className="errorMessage">{errorMessage}</p>

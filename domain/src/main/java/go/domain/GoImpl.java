@@ -1,7 +1,5 @@
 package go.domain;
 
-import go.domain.Intersection.Occupation;
-
 public class GoImpl {
     private Board gameBoard;
     private Player[] players;
@@ -12,7 +10,6 @@ public class GoImpl {
     public GameStatus getGameStatus() {
         return gameStatus;
     }
-
 
     public GoImpl(int boardSize){
         this.gameBoard = new Board(boardSize);

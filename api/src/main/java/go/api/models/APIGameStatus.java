@@ -4,7 +4,9 @@ import go.domain.GameStatus;
 import go.domain.Player;
 
 public class APIGameStatus {
-    public APIGameStatus(go.domain.Player player, go.domain.GameStatus gameStatus, String namePlayer1, String namePlayer2) {
+    public APIGameStatus(go.domain.GoImpl go, String namePlayer1, String namePlayer2) {
+        GameStatus gameStatus = go.getGameStatus();
+        Player player = go.getFirstPlayer();
         this.endOfGame = gameStatus.getEndOfGame();
         go.domain.Player winner = gameStatus.getWinner();
         if(winner == player) {
@@ -14,6 +16,7 @@ public class APIGameStatus {
         } else{
             this.winner = "";
         }
+        this.score = go.getGameStatus().getScore();
     }
 
     boolean endOfGame;
@@ -21,4 +24,7 @@ public class APIGameStatus {
     
     String winner;
     public String getWinner() { return winner; }
+
+    double[] score;
+    public double[] getScore() {return score;}
 }

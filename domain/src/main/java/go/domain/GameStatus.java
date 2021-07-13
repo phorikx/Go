@@ -6,6 +6,7 @@ public class GameStatus {
     private Player[] players;
     private Board gameBoard;
     private boolean endOfGame;
+    private double[] score;
 
     public boolean getEndOfGame() {
         return endOfGame;
@@ -17,6 +18,7 @@ public class GameStatus {
         players[1] = firstPlayer.getOpponent();
         this.gameBoard = gameBoard;
         endOfGame = false;
+        this.score = new double[] {0,0};
     }
 
     public boolean validMove(int[] coordinates, Occupation colour, GameHistory gameHistory) {
@@ -39,8 +41,7 @@ public class GameStatus {
             System.out.println("Spelende speler was niet aan zet.");
         }
 
-        if (validity) {
-            
+        if (validity) {            
             Board testBoard = new Board(this.gameBoard, true);
             testBoard.playMove(coordinates, colour);
             String encodedTestBoard = testBoard.getStringEncoding();
@@ -63,11 +64,19 @@ public class GameStatus {
         pointsPerPlayer[0] += this.gameBoard.calculateEndOfGamePoints()[0];
         pointsPerPlayer[1] += this.gameBoard.calculateEndOfGamePoints()[1];
         pointsPerPlayer[1] += GoImpl.komi;
+        this.score = pointsPerPlayer;
         return pointsPerPlayer;
     }
 
+    public double[] getScore() {
+        return this.score;
+    }
+
     public Player getWinner() {
-        double[] pointsPerPlayer = this.calculatePointsperPlayer();
+        double[] pointsPerPlayer = new double[]{0,0};
+        if(this.endOfGame) {
+            pointsPerPlayer = this.calculatePointsperPlayer();
+        }
         if (pointsPerPlayer[0]>pointsPerPlayer[1]) {
             return this.players[0];
         }

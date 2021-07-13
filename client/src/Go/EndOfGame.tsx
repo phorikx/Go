@@ -24,6 +24,12 @@ export function EndOfGame({ gameState, setGameState }: EndOfGameProps) {
             </td>
             <td> {gameState.players[1].name}</td>
         </tr>
+        <tr>
+            <td>
+                {gameState.gameStatus.score[0]}
+            </td>
+            <td>{gameState.gameStatus.score[1]}</td>
+        </tr>
     </table>
      </div>
     )

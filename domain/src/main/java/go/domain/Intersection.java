@@ -49,7 +49,7 @@ public class Intersection {
             }
             ArrayList<Intersection> ownIntersection = new ArrayList<Intersection>();
             ownIntersection.add(this);
-            //checkIntersectionComponentFreedoms(neighboursWithDifferentColour);
+            checkIntersectionComponentFreedoms(neighboursWithDifferentColour);
             System.out.println("We gaan de vrijheden checken.");
             checkIntersectionComponentFreedoms(neighbours);
             checkIntersectionComponentFreedoms(ownIntersection);

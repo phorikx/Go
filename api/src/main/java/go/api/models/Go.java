@@ -8,10 +8,11 @@ public class Go {
         players = new APIPlayer[2];
         players[0] = new APIPlayer(go.getFirstPlayer(), namePlayer1, true);
         players[1] = new APIPlayer(go.getSecondPlayer(), namePlayer2, false);
-        gameStatus = new APIGameStatus(go.getFirstPlayer(), go.getGameStatus(), namePlayer1, namePlayer2);
+        gameStatus = new APIGameStatus(go, namePlayer1, namePlayer2);
 
         int boardSize = go.getBoard().getBoardSize();
         this.board = new String[boardSize][boardSize];
+        this.boardSize = boardSize;
 
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
@@ -36,4 +37,7 @@ public class Go {
 
     APIGameStatus gameStatus;
     public APIGameStatus getGameStatus() { return gameStatus; }
+
+    int boardSize;
+    public int getBoardSize() {return boardSize;}
 }
